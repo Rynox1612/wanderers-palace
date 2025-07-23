@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property details</title>
+</head>
+<body>
+    <h3><%=property.title%></h3>
+    <p><%=property.description%></p>
+    <P>&#8377; <%=property.price%></P>
+    <p><%=property.country%></p>
+    <form action="/listings/<%=property._id%>/edit" method="get" style="display: inline-block;">
+        <button>Edit</button>
+    </form>
+    <form action="/listings/<%=property._id%>?_method=DELETE" method="post" style="display: inline-block;">
+        <button>Delete</button>
+    </form>
+</body>
+</html>

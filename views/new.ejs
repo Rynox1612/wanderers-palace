@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add property</title>
+</head>
+<body>
+    <h1>Add your propery details</h1>
+    <form action="/listings" method="post">
+        <input type="text" name="listing[title]" placeholder="Name of your property">
+        <br><br>
+        <textarea name="listing[description]" placeholder="About your property"></textarea>
+        <br><br>
+        <input type="text" name="listing[price]" placeholder="price in Indian Rupees(INR)">
+        <br><br>
+        <input type="text" name="listing[country]" placeholder="country location">
+        <br><br>
+        <input type="text" name="listing[image][url]" placeholder="Property image url">
+        <br><br>
+
+        <button>Add</button>
+    </form>
+</body>
+</html>
