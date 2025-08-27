@@ -2,14 +2,64 @@
 <body>
 
     <form action="/listings/<%=property._id%>" method="post">
-        <input type="text" value="<%=property.title%>" name="listing[title]">
-        <br><br>
-        <textarea name="listing[description]"><%=property.description%></textarea>
-        <br><br>
-        <input type="text" value="<%=property.price%>" name="listing[price]">
-        <br><br>
-        <input type="text" value="<%=property.country%>" name="listing[country]">
-        <br><br>
-        <button>Save</button>
+            <div class="mb-3 col-8">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        name="listing[title]"
+        placeholder="Name of your property"
+        id="title"
+        class="form-control"
+        value="<%= property.title %>"
+      />
+    </div>
+    <div class="mb-3 col-8">
+      <label for="description" class="form-label">Description </label>
+      <textarea
+        name="listing[description]"
+        placeholder="About your property"
+        class="form-control"
+        id="description"
+      ><%= property.description %>
+      </textarea>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-md-3 col-8">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="text"
+          name="listing[price]"
+          placeholder="price in Indian Rupees(INR)"
+          class="form-control"
+          id="price"
+          value="<%= property.price%>"
+        />
+      </div>
+      <div class="mb-3 col-md-5 col-8">
+        <label for="country" class="form-label">country</label>
+        <input
+          type="text"
+          name="listing[country]"
+          placeholder="country location"
+          class="form-control"
+          id="country"
+          value="<%= property.country %>"
+        />
+      </div>
+    </div>
+
+    <div class="mb-3 col-8">
+      <label for="image" class="form-label">Image link</label>
+      <input
+        type="text"
+        name="listing[image][url]"
+        placeholder="Property image url"
+        class="form-control"
+        id="image"
+        value="<%=property.image.url%>"
+      />
+
+      <br>
+      <button class="btn btn-sucess">Save</button>
     </form>
 </body>

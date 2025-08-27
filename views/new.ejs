@@ -1,19 +1,62 @@
 <%- layout("../layouts/boilerplate") %>
 
 <body>
-    <h1>Add your propery details</h1>
-    <form action="/listings" method="post">
-        <input type="text" name="listing[title]" placeholder="Name of your property">
-        <br><br>
-        <textarea name="listing[description]" placeholder="About your property"></textarea>
-        <br><br>
-        <input type="text" name="listing[price]" placeholder="price in Indian Rupees(INR)">
-        <br><br>
-        <input type="text" name="listing[country]" placeholder="country location">
-        <br><br>
-        <input type="text" name="listing[image][url]" placeholder="Property image url">
-        <br><br>
+  <h1>Add your propery details</h1>
+  <form action="/listings" method="post">
+    <div class="mb-3 col-8">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        name="listing[title]"
+        placeholder="Name of your property"
+        id="title"
+        class="form-control"
+      />
+    </div>
+    <div class="mb-3 col-8">
+      <label for="description" class="form-label">Description </label>
+      <textarea
+        name="listing[description]"
+        placeholder="About your property"
+        class="form-control"
+        id="description"
+      ></textarea>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-md-3 col-8">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="text"
+          name="listing[price]"
+          placeholder="price in Indian Rupees(INR)"
+          class="form-control"
+          id="price"
+        />
+      </div>
+      <div class="mb-3 col-md-5 col-8">
+        <label for="country" class="form-label">country</label>
+        <input
+          type="text"
+          name="listing[country]"
+          placeholder="country location"
+          class="form-control"
+          id="country"
+        />
+      </div>
+    </div>
 
-        <button>Add</button>
-    </form>
+    <div class="mb-3 col-8">
+      <label for="image" class="form-label">Image link</label>
+      <input
+        type="text"
+        name="listing[image][url]"
+        placeholder="Property image url"
+        class="form-control"
+        id="image"
+      />
+    </div>
+    <br /><br />
+    <button class="btn">Add</button>
+  </form>
 </body>
+<!--  -->
