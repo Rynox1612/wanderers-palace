@@ -1,13 +1,31 @@
 <%- layout("../layouts/boilerplate") %>
 <body>
-    <h3><%=property.title%></h3>
-    <p><%=property.description%></p>
-    <P>&#8377; <%=property.price%></P>
-    <p><%=property.country%></p>
-    <form action="/listings/<%=property._id%>/edit" method="get" style="display: inline-block;">
-        <button>Edit</button>
-    </form>
-    <form action="/listings/<%=property._id%>?_method=DELETE" method="post" style="display: inline-block;">
-        <button>Delete</button>
-    </form>
+  <div class="card col" style="width: 20rem">
+    <div class="card text-bg-dark">
+      <img
+        src="<%= property.image.url %>"
+        class="card-img-top"
+        alt="property image"
+      />
+    </div>
+    <div class="card-body">
+      <h5><%= property.title %></h5>
+      <p><%=property.description%></p>
+      <p>&#8377; <%= property.price.toLocaleString("en-IN")%> /Night</p>
+    </div>
+  </div>
+  <form
+    action="/listings/<%=property._id%>/edit"
+    method="get"
+    style="display: inline-block"
+  >
+    <button class="btn btn-success mx-3">Edit</button>
+  </form>
+  <form
+    action="/listings/<%=property._id%>?_method=DELETE"
+    method="post"
+    style="display: inline-block"
+  >
+    <button class="btn btn-danger ms-3">Delete</button>
+  </form>
 </body>
