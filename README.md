@@ -18,19 +18,19 @@
 
 ## 📁 Features
 
-- 📝 Add new room listings  
-- ✏️ Edit room information  
-- ❌ Delete a room  
+- 📝 Add new room listings
+- ✏️ Edit room information
+- ❌ Delete a room
 - 📜 View all rooms
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML, CSS, EJS  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB using Mongoose  
-- **Templating Engine**: EJS  
+- **Frontend**: HTML, CSS, EJS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB using Mongoose
+- **Templating Engine**: EJS
 
 ---
 
