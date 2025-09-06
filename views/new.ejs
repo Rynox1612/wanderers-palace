@@ -2,7 +2,7 @@
 
 <body>
   <h1>Add your propery details</h1>
-  <form action="/listings" method="post">
+  <form action="/listings" method="post" novalidate class="needs-validation">
     <div class="mb-3 col-8">
       <label for="title" class="form-label">Title</label>
       <input
@@ -11,7 +11,10 @@
         placeholder="Name of your property"
         id="title"
         class="form-control"
+        required
       />
+      <div class="valid-feedback">Title looks good</div>
+      <div class="invalid-feedback">Title is required</div>
     </div>
     <div class="mb-3 col-8">
       <label for="description" class="form-label">Description </label>
@@ -20,8 +23,10 @@
         placeholder="About your property"
         class="form-control"
         id="description"
+        required
       ></textarea>
-    </div>
+      <div class="invalid-feedback">Description is required</div>
+    </div> 
     <div class="row">
       <div class="mb-3 col-md-3 col-8">
         <label for="price" class="form-label">Price</label>
@@ -31,7 +36,9 @@
           placeholder="price in Indian Rupees(INR)"
           class="form-control"
           id="price"
+          required
         />
+        <div class="invalid-feedback">Enter a valid amount</div>
       </div>
       <div class="mb-3 col-md-5 col-8">
         <label for="country" class="form-label">country</label>
@@ -41,7 +48,9 @@
           placeholder="country location"
           class="form-control"
           id="country"
+          required
         />
+        <div class="invalid-feedback">Enter your country name</div>
       </div>
     </div>
 

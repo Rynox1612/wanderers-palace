@@ -18,6 +18,9 @@ let listingSchema = new Schema({
   image: {
     url: {
       type: String,
+      set: (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+      default:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvHdRZDerGbZ57-ps_PwHdfI90X4p1sr8I4w&s",
     },
   },
 
