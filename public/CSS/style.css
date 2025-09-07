@@ -1,6 +1,15 @@
 * {
   text-decoration: none !important;
 }
+
+body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
 .navbar {
   height: 5rem;
   background-color: white;
