@@ -7,9 +7,9 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema } = require("./Schema.js");
-const e = require("express");
-const { equal } = require("joi");
+const { listingSchema, reviewSchema } = require("./Schema.js");
+const Review = require("./models/review.js");
+const { equal, defaults } = require("joi");
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -35,13 +35,31 @@ async function main() {
 // Validating middleware
 const validateSchema = (req, res, next) => {
   const { error } = listingSchema.validate(req.body);
-  // let errorMsg = error.details.map((el) => el.message).join(", ");
-  let errorMsg = error.details
-    .map((el) => {
-      return el.message;
-    })
-    .join(", ");
+
   if (error) {
+    // let errorMsg = error.details.map((el) => el.message).join(", ");
+    let errorMsg = error.details
+      .map((el) => {
+        return el.message;
+      })
+      .join(", ");
+    throw new ExpressError(400, errorMsg);
+  } else {
+    next();
+  }
+};
+
+// Validating middleware
+const validateReviewSchema = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+
+  if (error) {
+    // let errorMsg = error.details.map((el) => el.message).join(", ");
+    let errorMsg = error.details
+      .map((el) => {
+        return el.message;
+      })
+      .join(", ");
     throw new ExpressError(400, errorMsg);
   } else {
     next();
@@ -118,6 +136,23 @@ app.delete(
     console.log(id);
     await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
+  })
+);
+
+// CREATE REVIEW ROUTE
+app.post(
+  "/listings/:id/review",
+  validateReviewSchema,
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    let newReview = new Review(req.body.review);
+
+    await newReview.save();
+    await listing.review.push(newReview);
+    await listing.save();
+
+    res.send("everything is saved");
   })
 );
 

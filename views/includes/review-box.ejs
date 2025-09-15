@@ -1,0 +1,41 @@
+<body>
+  <div>
+    <form
+      action="/listings/<%=property._id%>/review"
+      method="post"
+      novalidate
+      class="needs-validation"
+    >
+      <div class="m-3">
+        <label for="range4" class="form-label">Rate Us :</label>
+        <input
+          type="range"
+          name="review[rating]"
+          id="range4"
+          min="1"
+          max="5"
+          class="form-range"
+          width="20px"
+          defaultValue="1"
+        />
+        <output for="range4" id="rangeValue" aria-hidden="true"></output>
+      </div>
+      <div class="form-floating m-3">
+        <textarea
+          class="form-control"
+          placeholder="Leave a comment here"
+          id="floatingTextarea2"
+          style="height: 100px"
+          name="review[comment]"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please enter a valid comment</div>
+        <label for="floatingTextarea2">Share your experience</label>
+      </div>
+      <div class="m-3">
+        <button class="btn btn-outline-dark">Submit</button>
+      </div>
+    </form>
+  </div>
+  <script src="../JS/range-output.js"></script>
+</body>

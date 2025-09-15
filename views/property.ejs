@@ -14,6 +14,8 @@
       <p>&#8377; <%= property.price.toLocaleString("en-IN")%> /Night</p>
     </div>
   </div>
+  <%- include("../views/includes/review-box.ejs") %>
+
   <form
     action="/listings/<%=property._id%>/edit"
     method="get"
