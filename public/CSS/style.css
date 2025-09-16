@@ -42,7 +42,7 @@ body {
   text-decoration: underline;
 }
 
-.card {
+.listing-card {
   border: none !important;
   padding: 0px !important;
   margin: 0.5rem;

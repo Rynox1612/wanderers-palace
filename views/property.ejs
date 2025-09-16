@@ -1,7 +1,7 @@
 <%- layout("../layouts/boilerplate") %>
 <body>
-  <div class="card col" style="width: 20rem">
-    <div class="card text-bg-dark">
+  <div class="card listing-card col" style="width: 20rem">
+    <div class="card listing-card text-bg-dark">
       <img
         src="<%= property.image.url %>"
         class="card-img-top"
@@ -15,6 +15,7 @@
     </div>
   </div>
   <%- include("../views/includes/review-box.ejs") %>
+  <%-include("../views/includes/reviews.ejs") %>
 
   <form
     action="/listings/<%=property._id%>/edit"

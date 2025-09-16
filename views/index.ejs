@@ -4,7 +4,7 @@
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-xs-1">
         <%for(property of properties){%>
             <a href="/listings/<%= property._id %>">
-            <div class="card col" style="width: 20rem;">
+            <div class="card listing-card col" style="width: 20rem;">
                 <div class="card text-bg-dark">
                     <img src="<%= property.image.url %>" class="card-img-top" alt="property image">
                     <div class="card-img-overlay">

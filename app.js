@@ -97,7 +97,7 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let property = await Listing.findById(id);
+    let property = await Listing.findById(id).populate("review");
     res.render("property.ejs", { property });
   })
 );
@@ -152,7 +152,18 @@ app.post(
     await listing.review.push(newReview);
     await listing.save();
 
-    res.send("everything is saved");
+    res.redirect(`/listings/${id}`);
+  })
+);
+
+//Delete review route
+app.delete(
+  "/listings/:id/review/:reviewID",
+  wrapAsync(async (req, res) => {
+    let { id, reviewID } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { review: reviewID } });
+    await Review.findByIdAndDelete(reviewID);
+    res.redirect(`/listings/${id}`);
   })
 );
 
