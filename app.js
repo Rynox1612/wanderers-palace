@@ -7,6 +7,9 @@ const ExpressError = require("./utils/ExpressError.js");
 const listing = require("./routes/listing.js");
 const mongoose = require("mongoose");
 const review = require("./routes/review.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+require("dotenv").config();
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -29,6 +32,25 @@ async function main() {
   mongoose.connect(MONGOOSE_URL);
 }
 
+const sessionOptions = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
 app.use("/listings", listing);
 app.use("/listings/:id/review", review);
 
@@ -42,6 +64,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.send("Something went wrong");
 });
 

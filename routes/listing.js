@@ -3,6 +3,7 @@ const Listing = require("../models/listing");
 const wrapAsync = require("../utils/wrapAsync");
 const router = express.Router();
 const { listingSchema } = require("../Schema.js");
+const ExpressError = require("../utils/ExpressError.js");
 
 // Validating middleware
 const validateSchema = (req, res, next) => {
@@ -34,6 +35,7 @@ router.post(
   wrapAsync(async (req, res) => {
     let property = new Listing(req.body.listing);
     await property.save();
+    req.flash("success", "Successfully made a new listing!");
     res.redirect("/listings");
   })
 );
@@ -49,6 +51,10 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let property = await Listing.findById(id).populate("review");
+    if (!property) {
+      req.flash("error", "Cannot find that listing!");
+      return res.redirect("/listings");
+    }
     res.render("property.ejs", { property });
   })
 );
@@ -59,6 +65,10 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let property = await Listing.findById(id);
+    if (!property) {
+      req.flash("error", "Cannot find that listing!");
+      return res.redirect("/listings");
+    }
     res.render("edit", { property });
   })
 );
@@ -70,6 +80,7 @@ router.post(
   wrapAsync(async (req, res) => {
     let property = req.body.listing;
     let { id } = req.params;
+    req.flash("success", "Successfully updated the listing!");
     await Listing.findByIdAndUpdate(id, property, {
       new: true,
       runValidators: true,
@@ -85,7 +96,13 @@ router.delete(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     console.log(id);
-    await Listing.findByIdAndDelete(id);
+    const property = await Listing.findByIdAndDelete(id);
+    if (!property) {
+      req.flash("error", "Cannot find your requested listing!");
+      return res.redirect("/listings");
+    }
+
+    req.flash("success", "Successfully deleted the listing!");
     res.redirect("/listings");
   })
 );
