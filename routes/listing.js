@@ -42,7 +42,14 @@ router.post(
 
 // NEW FORM
 router.get("/new", async (req, res) => {
-  res.render("new");
+  if (!req.isAuthenticated()) {
+    req.flash("error", "You must be logged in to create listing");
+    req.session.redirectUrl = req.originalUrl;
+    res.redirect("/login");
+  } else {
+    console.log(req.user);
+    res.render("new");
+  }
 });
 
 // Show route
