@@ -1,6 +1,9 @@
 <%- layout("../layouts/boilerplate") %>
 <body>
   <div class="card listing-card col" style="width: 20rem">
+    <div class="card card-header border-0 bg-transparent">
+      <b class="mt-0"> <%= property.owner.username %></b>
+    </div>
     <div class="card listing-card text-bg-dark">
       <img
         src="<%= property.image.url %>"
@@ -14,9 +17,7 @@
       <p>&#8377; <%= property.price.toLocaleString("en-IN")%> /Night</p>
     </div>
   </div>
-  <%- include("../views/includes/review-box.ejs") %>
-  <%-include("../views/includes/reviews.ejs") %>
-
+  <% if(currUser && currUser._id.equals(property.owner._id)) {%>
   <form
     action="/listings/<%=property._id%>/edit"
     method="get"
@@ -31,4 +32,6 @@
   >
     <button class="btn btn-danger ms-3">Delete</button>
   </form>
+  <% } %> <%- include("../views/includes/review-box.ejs") %>
+  <%-include("../views/includes/reviews.ejs") %>
 </body>
