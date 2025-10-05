@@ -4,12 +4,16 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
-const listing = require("./routes/listing.js");
+const listingRouter = require("./routes/listing.js");
 const mongoose = require("mongoose");
-const review = require("./routes/review.js");
+const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 require("dotenv").config();
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+const userRouter = require("./routes/users.js");
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -45,14 +49,32 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
   next();
 });
 
-app.use("/listings", listing);
-app.use("/listings/:id/review", review);
+// app.get("/demouser", async (req, res) => {
+//   const user = new User({
+//     username: "delta-student",
+//     email: "student@gmail.com",
+//   });
+//   const newUser = await User.register(user, "demopassword");
+//   res.send(newUser);
+// });
+
+app.use("/listings", listingRouter);
+app.use("/listings/:id/review", reviewRouter);
+app.use("/", userRouter);
 
 app.get("*", (req, res, next) => {
   next(new ExpressError(404, "Page not found"));
