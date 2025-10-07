@@ -2,10 +2,17 @@
   <% for(review of property.review){%>
   <div class="card m-3">
     <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-body-dark">User3434</h6>
+      <h6 class="card-subtitle mb-2 text-body-dark">
+        User3434 &nbsp;
+        <p
+          class="starability-result d-inline-block m-0"
+          data-rating="<%= review.rating%>"
+        ></p>
+      </h6>
       <hr />
+
       <p class="card-text mb-0"><%= review.comment %></p>
-      <p style="margin-top: 0" class="card-text"><%= review.rating%>/5 stars</p>
+      <br /><br />
       <form
         action="/listings/<%= property._id %>/review/<%= review._id %>?_method=DELETE"
         method="POST"
