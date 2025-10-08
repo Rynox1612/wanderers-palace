@@ -5,6 +5,7 @@ module.exports.Index = async (req, res) => {
 };
 
 module.exports.CreateRoute = async (req, res) => {
+  console.log(req.file);
   let property = new Listing(req.body.listing);
   await property.save();
   req.flash("success", "Successfully made a new listing!");

@@ -28,6 +28,11 @@ let listingSchema = new Schema({
   country: {
     type: String,
   },
+
+  location: {
+    type: String,
+  },
+
   review: [
     {
       type: Schema.Types.ObjectId,

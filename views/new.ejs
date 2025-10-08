@@ -2,7 +2,13 @@
 
 <body>
   <h1>Add your propery details</h1>
-  <form action="/listings" method="post" novalidate class="needs-validation">
+  <form
+    action="/listings"
+    method="post"
+    novalidate
+    class="needs-validation"
+    enctype="multipart/form-data"
+  >
     <div class="mb-3 col-8">
       <label for="title" class="form-label">Title</label>
       <input
@@ -26,7 +32,7 @@
         required
       ></textarea>
       <div class="invalid-feedback">Description is required</div>
-    </div> 
+    </div>
     <div class="row">
       <div class="mb-3 col-md-3 col-8">
         <label for="price" class="form-label">Price</label>
@@ -55,11 +61,22 @@
     </div>
 
     <div class="mb-3 col-8">
-      <label for="image" class="form-label">Image link</label>
+      <label for="location" class="form-label">Location :</label>
       <input
         type="text"
-        name="listing[image][url]"
-        placeholder="Property image url"
+        name="listing[location]"
+        placeholder="Enter location"
+        class="form-control"
+        id="location"
+      />
+    </div>
+
+    <div class="mb-3 col-8">
+      <label for="image" class="form-label">Image</label>
+      <input
+        type="file"
+        name="listing[image]"
+        placeholder="Property image"
         class="form-control"
         id="image"
       />
