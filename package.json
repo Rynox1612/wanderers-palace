@@ -13,6 +13,7 @@
     "endOfLine": "lf"
   },
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^17.2.2",
     "ejs-mate": "^4.0.0",

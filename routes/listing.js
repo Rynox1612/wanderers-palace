@@ -4,8 +4,7 @@ const router = express.Router();
 const { listingSchema } = require("../Schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const listingRoute = require("../controllers/listing.js");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const upload = require("../upload.js");
 
 // Validating middleware
 const validateSchema = (req, res, next) => {
@@ -27,7 +26,11 @@ const validateSchema = (req, res, next) => {
 router
   .route("/")
   .get(wrapAsync(listingRoute.Index))
-  .post(upload.single("listing[image]"), wrapAsync(listingRoute.CreateRoute));
+  .post(
+    upload.single("listing[image]"),
+    validateSchema,
+    wrapAsync(listingRoute.CreateRoute)
+  );
 
 router.get("/new", wrapAsync(listingRoute.RenderCreateForm));
 

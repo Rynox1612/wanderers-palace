@@ -1,15 +1,36 @@
-const Listing = require("../models/listing");
+const cloudinary = require("../cloudConfig"); // import your config
+const fs = require("fs");
+const Listing = require("../models/listing"); // assuming this is your Mongoose model
+
+module.exports.CreateRoute = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "wanderers-palace",
+    });
+    console.log(result);
+    fs.unlinkSync(req.file.path);
+
+    // Create new listing with both text and image data
+    const property = new Listing(req.body.listing);
+    property.image = {
+      url: result.secure_url,
+      filename: result.public_id,
+    };
+
+    await property.save();
+
+    req.flash("success", "Successfully made a new listing!");
+    res.redirect("/listings");
+  } catch (err) {
+    console.error("Error uploading:", err);
+    req.flash("error", "Something went wrong while uploading!");
+    res.redirect("/listings/new");
+  }
+};
+
 module.exports.Index = async (req, res) => {
   let properties = await Listing.find();
   res.render("index", { properties });
-};
-
-module.exports.CreateRoute = async (req, res) => {
-  console.log(req.file);
-  let property = new Listing(req.body.listing);
-  await property.save();
-  req.flash("success", "Successfully made a new listing!");
-  res.redirect("/listings");
 };
 
 module.exports.RenderCreateForm = async (req, res) => {
