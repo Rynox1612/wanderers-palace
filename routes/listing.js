@@ -37,7 +37,11 @@ router.get("/new", wrapAsync(listingRoute.RenderCreateForm));
 router
   .route("/:id")
   .get(wrapAsync(listingRoute.ShowRoute))
-  .post(validateSchema, wrapAsync(listingRoute.EditRoute))
+  .post(
+    upload.single("listing[image]"),
+    validateSchema,
+    wrapAsync(listingRoute.EditRoute)
+  )
   .delete(wrapAsync(listingRoute.DestroyRoute));
 
 router.get("/:id/edit", wrapAsync(listingRoute.RenderEditForm));

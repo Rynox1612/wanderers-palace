@@ -61,19 +61,42 @@ module.exports.RenderEditForm = async (req, res) => {
     req.flash("error", "Cannot find that listing!");
     return res.redirect("/listings");
   }
-  res.render("edit", { property });
+  console.log(property.image.url);
+  originalUrl = property.image.url;
+  originalUrl = originalUrl.replace("/upload", "/upload/h_250,w_300");
+  res.render("edit", { property, originalUrl });
 };
 
 module.exports.EditRoute = async (req, res) => {
-  let property = req.body.listing;
-  let { id } = req.params;
-  req.flash("success", "Successfully updated the listing!");
-  await Listing.findByIdAndUpdate(id, property, {
-    new: true,
-    runValidators: true,
-  });
+  try {
+    var result = "";
+    if (typeof req.file != "undefined") {
+      result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "wanderers-palace",
+      });
+      console.log(result);
+      fs.unlinkSync(req.file.path);
+    }
+    let property = req.body.listing;
+    let { id } = req.params;
+    req.flash("success", "Successfully updated the listing!");
 
-  res.redirect(`/listings/${id}`);
+    const listing = await Listing.findByIdAndUpdate(id, property, {
+      new: true,
+      runValidators: true,
+    });
+    listing.image = {
+      url: result.secure_url,
+      filename: result.public_id,
+    };
+
+    listing.save();
+    res.redirect(`/listings/${id}`);
+  } catch (err) {
+    console.error("Error uploading:", err);
+    req.flash("error", "Something went wrong while uploading!");
+    res.redirect("/listings/new");
+  }
 };
 
 module.exports.DestroyRoute = async (req, res) => {
