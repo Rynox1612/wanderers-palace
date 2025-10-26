@@ -1,8 +1,13 @@
 <%- layout("../layouts/boilerplate") %>
 <body>
-
-    <form action="/listings/<%=property._id%>" method="post" novalidation class="needs-validation">
-            <div class="mb-3 col-8">
+  <form
+    action="/listings/<%=property._id%>"
+    method="post"
+    novalidation
+    class="needs-validation"
+    enctype="multipart/form-data"
+  >
+    <div class="mb-3 col-8">
       <label for="title" class="form-label">Title</label>
       <input
         type="text"
@@ -13,7 +18,7 @@
         value="<%= property.title %>"
         required
       />
-            <div class="valid-feedback">Title looks good</div>
+      <div class="valid-feedback">Title looks good</div>
       <div class="invalid-feedback">Title is required</div>
     </div>
     <div class="mb-3 col-8">
@@ -24,10 +29,11 @@
         class="form-control"
         id="description"
         required
-      ><%= property.description %>
+      >
+<%= property.description %>
 
       </textarea>
-            <div class="invalid-feedback">Description is required</div>
+      <div class="invalid-feedback">Description is required</div>
     </div>
     <div class="row">
       <div class="mb-3 col-md-3 col-8">
@@ -42,7 +48,7 @@
           required
         />
       </div>
-              <div class="invalid-feedback">Enter a valid amount</div>
+      <div class="invalid-feedback">Enter a valid amount</div>
       <div class="mb-3 col-md-5 col-8">
         <label for="country" class="form-label">country</label>
         <input
@@ -59,17 +65,34 @@
     </div>
 
     <div class="mb-3 col-8">
-      <label for="image" class="form-label">Image link</label>
+      <label for="location" class="form-label">Location :</label>
       <input
         type="text"
-        name="listing[image][url]"
-        placeholder="Property image url"
+        name="listing[location]"
+        placeholder="Enter location"
+        class="form-control"
+        id="location"
+        value="<%= property.location %>"
+      />
+    </div>
+
+    <div class="mb-3 col-8">
+      <img src="<%= originalUrl %>" alt="" />
+    </div>
+
+    <div class="mb-3 col-8">
+      <label for="image" class="form-label">Image link</label>
+      <input
+        type="file"
+        name="listing[image]"
+        placeholder="listing image"
         class="form-control"
         id="image"
         value="<%=property.image.url%>"
       />
+    </div>
 
-      <br>
-      <button class="btn btn-success">Save</button>
-    </form>
+    <br />
+    <button class="btn btn-success">Save</button>
+  </form>
 </body>

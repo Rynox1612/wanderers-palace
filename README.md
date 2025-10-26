@@ -41,6 +41,9 @@
 ```bash
 git clone https://github.com/Rynox1612/wanderers-palace.git
 cd wanderers-palace
+npm install
+npm install nodemon
+nodemon app.js
 ```
 
 ### 🔒 Authentication & Security
